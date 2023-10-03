@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+a { text-decoration: none; color: #F5F5F5; opacity: 1; transition: opacity ease-in-out 0.2s;}
+a:hover { opacity: 0.5; transition: opacity ease-in-out 0.2s;}
+h2 { width: 100%; text-align: center; font-weight: 400; font-size: 1.2em;}
+.spacer { flex: 1 1 auto; }
+.white-color { color: #F5F5F5 !important; }
+.red-color { color: #e25656 !important; }
+.black-color { color: #222222 !important; }
+.green-color { color: #3cde7f !important; }
+.mat-mdc-menu-content {padding: 8px 20px !important;}
