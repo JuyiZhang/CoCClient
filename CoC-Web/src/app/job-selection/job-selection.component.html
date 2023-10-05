@@ -18,6 +18,9 @@
             <mat-cell *matCellDef="let element">{{element["Skills"]}}</mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row matRipple mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-row matRipple mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectJob(row)" [mat-dialog-close]="row"></mat-row>
     </mat-table>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button color="primary" mat-dialog-close>取消</button>
 </div>

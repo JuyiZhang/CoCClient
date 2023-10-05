@@ -38,7 +38,7 @@ export class SkilleditComponent {
   }
 
   updateValue() {
-    this.final_add_value = parseInt(this.add_value_profession!) + parseInt(this.add_value_interest!)
+    this.final_add_value = (this.data.profession_selected ? parseInt(this.add_value_profession!) : 0) + parseInt(this.add_value_interest!)
     this.final_value = parseInt(this.data.init_value) + this.final_add_value
     this.pro_success = Math.trunc(this.final_value/2)
     this.max_success = Math.trunc(this.final_value/4)

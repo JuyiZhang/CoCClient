@@ -35,10 +35,12 @@
         <mat-step>
             <form>
                 <ng-template matStepLabel>角色属性</ng-template>
+                <p *ngIf="currentProfession != null">您的技能点将基于 <strong>{{currentProfession.Profession_Point}}</strong></p>
+                <p *ngIf="currentProfession != null">依照当前数据，您有 <strong>{{skillPoint}}</strong> 点数的技能点, <strong>{{hp}}</strong> 点HP（生命值）, <strong>{{mp}}</strong> 点MP（魔法值）, <strong>{{san}}</strong> 点San（理智）值</p>
                 <div *ngFor="let prop of newCharacterInfo.properties" class="form-field-div">
                     <mat-form-field>
                         <mat-label>{{prop.characteristic_display}}</mat-label>
-                        <input matInput name="{{prop.characteristic_name}}" [(ngModel)]="propData[prop.characteristic_name]">
+                        <input matInput name="{{prop.characteristic_name}}" [(ngModel)]="propData[prop.characteristic_name]" (ngModelChange)="updateSkillPoint()" type="number">
                     </mat-form-field>
                 </div>
             </form>
@@ -46,9 +48,11 @@
         <mat-step>
             <form>
                 <ng-template matStepLabel>角色技能</ng-template>
+                <p *ngIf="currentProfession != null">您选择的职业是：{{currentProfession.Name}}<br>您的职业可选技能是：{{currentProfession.Skills}}</p>
                 <p>您现在拥有的技能点是：</p>
                 <p>您选择的职业技能有：</p>
                 <h4>请进行技能加点</h4>
+                <app-add-personal-skill [(personalSkill)]="personalSkill" [skillLimit]="skillLimit" (change)="getSkills()"></app-add-personal-skill>
                 <div class="skill-table">
                     <div *ngFor="let skill of skills" class="coc-skill-container">
                         <button mat-mini-fab (click)="selectProfession(skill)" class="coc-skill-main-button" disabled="{{!skill.profession_selectable == true}}">
@@ -60,9 +64,13 @@
                             <p class="coc-skill-value" *ngIf="skill.add_value != null">{{skill.final_value}}</p>
                             <p class="coc-skill-value" *ngIf="skill.add_value == null">{{skill.init_value}}</p>
                         </div>
-                        
                     </div>
                 </div>
+            </form>
+        </mat-step>
+        <mat-step>
+            <form>
+                <ng-template matStepLabel>角色武器</ng-template>
             </form>
         </mat-step>
     </mat-stepper>

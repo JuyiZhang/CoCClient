@@ -16,4 +16,8 @@ export class JobSelectionComponent {
     @Inject(MAT_DIALOG_DATA) public data:string
   ) {}
 
+  selectJob(row: any) {
+    this.data = row.Name
+    console.log(row.Name)
+  }
 }

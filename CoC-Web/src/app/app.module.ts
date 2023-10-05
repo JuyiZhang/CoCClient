@@ -36,6 +36,9 @@ import { JobSelectionComponent } from './job-selection/job-selection.component';
 import { FormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { SkilleditComponent } from './skilledit/skilledit.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteSelectedEvent, MatAutocompleteModule} from '@angular/material/autocomplete';
+import { AddPersonalSkillComponent } from './add-personal-skill/add-personal-skill.component'; 
 
 @NgModule({
   declarations: [
@@ -51,7 +54,8 @@ import { SkilleditComponent } from './skilledit/skilledit.component';
     AboutComponent,
     GuideComponent,
     JobSelectionComponent,
-    SkilleditComponent
+    SkilleditComponent,
+    AddPersonalSkillComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +80,9 @@ import { SkilleditComponent } from './skilledit/skilledit.component';
     MatStepperModule,
     MatInputModule,
     FormsModule,
-    MatChipsModule
+    MatChipsModule,
+    ReactiveFormsModule,
+    MatAutocompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent]
