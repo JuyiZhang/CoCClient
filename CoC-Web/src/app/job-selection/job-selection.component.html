@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>选择你的职业</h2>
+<div mat-dialog-content>
+    <mat-table mat-table [dataSource]="profession">
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>职业</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element["Name"]}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="credit">
+            <mat-header-cell *matHeaderCellDef>信用</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element["Credit"]}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="point" [style.max-width.px] = 40>
+            <mat-header-cell *matHeaderCellDef>职业点</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element["Profession_Point"]}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="skill">
+            <mat-header-cell *matHeaderCellDef>技能</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element["Skills"]}}</mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row matRipple mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>

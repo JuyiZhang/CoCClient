@@ -9,6 +9,7 @@ import { RecordComponent } from './record/record.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AboutComponent } from './about/about.component';
 import { RecruitComponent } from './recruit/recruit.component';
+import { GuideComponent } from './guide/guide.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path: 'settings', component: SettingsComponent},
   {path: 'about', component: AboutComponent},
   {path: 'recruit', component: RecruitComponent},
+  {path: 'guide', component: GuideComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: '**', redirectTo: '/home', pathMatch: 'full'},
 ];

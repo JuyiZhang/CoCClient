@@ -16,10 +16,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatRippleModule } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MainpageComponent } from './mainpage/mainpage.component';
 import { ModulesComponent } from './modules/modules.component';
 import { RecordComponent } from './record/record.component';
@@ -29,6 +31,11 @@ import { LogoutComponent } from './logout/logout.component';
 import { RecruitComponent } from './recruit/recruit.component';
 import { AddcharComponent } from './addchar/addchar.component';
 import { AboutComponent } from './about/about.component';
+import { GuideComponent } from './guide/guide.component';
+import { JobSelectionComponent } from './job-selection/job-selection.component';
+import { FormsModule } from '@angular/forms';
+import { MatChipsModule } from '@angular/material/chips';
+import { SkilleditComponent } from './skilledit/skilledit.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +48,10 @@ import { AboutComponent } from './about/about.component';
     LogoutComponent,
     RecruitComponent,
     AddcharComponent,
-    AboutComponent
+    AboutComponent,
+    GuideComponent,
+    JobSelectionComponent,
+    SkilleditComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +72,11 @@ import { AboutComponent } from './about/about.component';
     MatCardModule,
     MatListModule,
     MatRippleModule,
-    MatMenuModule
+    MatMenuModule,
+    MatStepperModule,
+    MatInputModule,
+    FormsModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

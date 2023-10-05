@@ -1,1 +1,69 @@
-<p>addchar works!</p>
+<div class="view-padding">
+    <mat-stepper>
+        <mat-step>
+            <form>
+                <ng-template matStepLabel>角色基本信息</ng-template>
+                <div *ngFor="let basicProp of newCharacterInfo.basicInfo" class="form-field-div">
+                    <mat-form-field *ngIf="basicProp.characteristic_type == chartypeenum.string" [style.width.px]="212">
+                        <mat-label>{{basicProp.characteristic_display}}</mat-label>
+                        <input matInput name="{{basicProp.characteristic_name}}" [(ngModel)]="basicInfoData[basicProp.characteristic_name]">
+                        <!--<button mat-button matSuffix type="button" (click)="submitInfo()" color="primary" *ngIf="basicProp.characteristic_name == 'name'">
+                            生成
+                        </button>-->
+                    </mat-form-field>
+                    <mat-form-field *ngIf="basicProp.characteristic_type == chartypeenum.number">
+                        <mat-label>{{basicProp.characteristic_display}}</mat-label>
+                        <input matInput name="{{basicProp.characteristic_name}}" [(ngModel)]="basicInfoData[basicProp.characteristic_name]" type="number">
+                    </mat-form-field>
+                    <mat-form-field *ngIf="basicProp.characteristic_type == chartypeenum.dropdown">
+                        <mat-label>{{basicProp.characteristic_display}}</mat-label>
+                        <mat-select name="{{basicProp.characteristic_name}}" [(ngModel)]="basicInfoData[basicProp.characteristic_name]">
+                            <mat-option *ngFor="let dropdown_item of basicProp.characteristic_dropdown" value="{{dropdown_item}}">{{dropdown_item}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="basicProp.characteristic_type == chartypeenum.select_window" [style.width.px]="212">
+                        <mat-label>{{basicProp.characteristic_display}}</mat-label>
+                        <input matInput disabled="true" name="{{basicProp.characteristic_name}}" [(ngModel)]="basicInfoData[basicProp.characteristic_name]">
+                        <button mat-button matSuffix type="button" (click)="setProfession()" color="primary" *ngIf="basicProp.characteristic_type == chartypeenum.select_window">
+                            选择
+                        </button>
+                    </mat-form-field>
+                </div>
+                
+            </form>
+        </mat-step>
+        <mat-step>
+            <form>
+                <ng-template matStepLabel>角色属性</ng-template>
+                <div *ngFor="let prop of newCharacterInfo.properties" class="form-field-div">
+                    <mat-form-field>
+                        <mat-label>{{prop.characteristic_display}}</mat-label>
+                        <input matInput name="{{prop.characteristic_name}}" [(ngModel)]="propData[prop.characteristic_name]">
+                    </mat-form-field>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step>
+            <form>
+                <ng-template matStepLabel>角色技能</ng-template>
+                <p>您现在拥有的技能点是：</p>
+                <p>您选择的职业技能有：</p>
+                <h4>请进行技能加点</h4>
+                <div class="skill-table">
+                    <div *ngFor="let skill of skills" class="coc-skill-container">
+                        <button mat-mini-fab (click)="selectProfession(skill)" class="coc-skill-main-button" disabled="{{!skill.profession_selectable == true}}">
+                            <mat-icon *ngIf="!skill.profession_selected">star_border</mat-icon>
+                            <mat-icon *ngIf="skill.profession_selected">star</mat-icon>
+                        </button>
+                        <div (click)="editSkill(skill)" style="height: fit-content;">
+                            <p class="coc-skill-text">{{skill.name}}</p>
+                            <p class="coc-skill-value" *ngIf="skill.add_value != null">{{skill.final_value}}</p>
+                            <p class="coc-skill-value" *ngIf="skill.add_value == null">{{skill.init_value}}</p>
+                        </div>
+                        
+                    </div>
+                </div>
+            </form>
+        </mat-step>
+    </mat-stepper>
+</div>

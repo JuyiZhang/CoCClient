@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>编辑技能：{{data.name}}</h2>
+<div mat-dialog-content>
+    <form>
+        <p>基础技能点数: {{data.init_value}}</p>
+        <mat-form-field [style.width.px]="130">
+            <mat-label>职业点加点</mat-label>
+            <input matInput name="profession_add" [(ngModel)]="add_value_profession" (ngModelChange)="updateValue()">
+        </mat-form-field>
+        +
+        <mat-form-field [style.width.px]="130">
+            <mat-label>兴趣点加点</mat-label>
+            <input matInput name="interest_add" [(ngModel)]="add_value_interest" (ngModelChange)="updateValue()">
+        </mat-form-field>
+    </form>
+    <p>最终技能点数：{{final_value}}</p>
+    <p>成功/困难成功/极难成功：{{final_value}}% / {{pro_success}}% / {{max_success}}%</p>
+
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-raised-button (click)="saveValue()" mat-dialog-close color="primary">保存</button>
+    <button mat-button color="primary" mat-dialog-close>取消</button>
+</div>
