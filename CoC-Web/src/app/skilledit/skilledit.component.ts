@@ -38,8 +38,11 @@ export class SkilleditComponent {
   }
 
   updateValue() {
-    this.final_add_value = (this.data.profession_selected ? parseInt(this.add_value_profession!) : 0) + parseInt(this.add_value_interest!)
-    this.final_value = parseInt(this.data.init_value) + this.final_add_value
+    let add_value_profession_local = this.add_value_profession == null ? 0 : parseInt(this.add_value_profession!);
+    let add_value_interest_local = this.add_value_interest == null ? 0 : parseInt(this.add_value_interest!);
+    let init_value_local = this.data.init_value == undefined ? 0 : parseInt(this.data.init_value!);
+    this.final_add_value = (this.data.profession_selected ? add_value_profession_local : 0) + add_value_interest_local
+    this.final_value = init_value_local + this.final_add_value
     this.pro_success = Math.trunc(this.final_value/2)
     this.max_success = Math.trunc(this.final_value/4)
     console.log(this.data)

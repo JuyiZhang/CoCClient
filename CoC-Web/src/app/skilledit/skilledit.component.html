@@ -4,12 +4,12 @@
         <p>基础技能点数: {{data.init_value}}</p>
         <mat-form-field [style.width.px]="130" *ngIf="data.profession_selected">
             <mat-label>职业点加点</mat-label>
-            <input matInput name="profession_add" [(ngModel)]="add_value_profession" (ngModelChange)="updateValue()">
+            <input matInput name="profession_add" type="number" [(ngModel)]="add_value_profession" (ngModelChange)="updateValue()">
         </mat-form-field>
         +
         <mat-form-field [style.width.px]="130">
             <mat-label>兴趣点加点</mat-label>
-            <input matInput name="interest_add" [(ngModel)]="add_value_interest" (ngModelChange)="updateValue()">
+            <input matInput name="interest_add" type="number" [(ngModel)]="add_value_interest" (ngModelChange)="updateValue()">
         </mat-form-field>
     </form>
     <p>最终技能点数：{{final_value}}</p>

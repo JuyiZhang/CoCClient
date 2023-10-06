@@ -18,6 +18,5 @@ export class JobSelectionComponent {
 
   selectJob(row: any) {
     this.data = row.Name
-    console.log(row.Name)
   }
 }

@@ -39,6 +39,7 @@ import { SkilleditComponent } from './skilledit/skilledit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteModule} from '@angular/material/autocomplete';
 import { AddPersonalSkillComponent } from './add-personal-skill/add-personal-skill.component'; 
+import { MatTabsModule } from '@angular/material/tabs'; 
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { AddPersonalSkillComponent } from './add-personal-skill/add-personal-ski
     FormsModule,
     MatChipsModule,
     ReactiveFormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -8,6 +8,7 @@ import { JobSelectionComponent } from '../job-selection/job-selection.component'
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-addchar',
@@ -42,6 +43,9 @@ export class AddcharComponent {
     "edu": "",
     "luck": "",
   }
+  propList = ["str","con","siz","dex","app","int","pow","edu","luck"]
+  maxPropPoint = 480
+  luckNotIncluded = true
 
   skills: cocSkill[] = [{
     name: "会计", init_value: "5", final_value: "5"
@@ -178,15 +182,20 @@ export class AddcharComponent {
   }];
 
   weapons = {}
-  skillLimit = 1
+  skillLimit = 0
   skillPoint = 0
+  interestPoint = 0
+  remainingSkillPoint = 0
+  remainingInterestPoint = 0
   personalSkill:string[] = [];
   chartypeenum = characteristic_type_enum
   hp = 0
   mp = 0
   san = 0
 
-  constructor (public dialog: MatDialog) {}
+  constructor (
+    public dialog: MatDialog
+    ) {}
 
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -198,10 +207,24 @@ export class AddcharComponent {
     console.log(this.basicInfoData)
   }
 
+  remainingPropPoint = this.maxPropPoint
+
+  checkProperties() {
+    this.remainingPropPoint = this.maxPropPoint
+    for (let key in this.propData){
+      this.remainingPropPoint -= this.propData[key] == "" ? 0 : parseInt(this.propData[key])
+    }
+    if (this.luckNotIncluded) {
+      this.remainingPropPoint += this.propData["luck"] == "" ? 0 : parseInt(this.propData["luck"])
+    }
+  }
+
   updateSkillPoint() {
+    this.checkProperties()
     this.hp = Math.trunc(parseInt(this.propData["str"])/10) + Math.trunc(parseInt(this.propData["siz"])/10)
     this.mp = Math.trunc(parseInt(this.propData["pow"])/5)
     this.san = parseInt(this.propData["pow"])
+    this.interestPoint = parseInt(this.propData["int"])*2
     if (this.currentProfession.EDU == 4) {
       this.skillPoint = parseInt(this.propData["edu"])*4
     } else {
@@ -237,6 +260,8 @@ export class AddcharComponent {
         this.skillPoint += Math.max(dexval,appval,strval)*2
       }
     }
+    this.remainingSkillPoint = this.skillPoint
+    this.remainingInterestPoint = this.interestPoint
   }
 
   getSkills() {
@@ -283,11 +308,65 @@ export class AddcharComponent {
     skill.profession_selected = !skill.profession_selected
   }
 
+  checkPoint() {
+    this.remainingSkillPoint = this.skillPoint
+    this.remainingInterestPoint = this.interestPoint
+    this.skills.forEach(skill => {
+      this.remainingSkillPoint -= skill.add_value_profession==undefined ? 0 : parseInt(skill.add_value_profession)
+      this.remainingInterestPoint -= skill.add_value_interest==undefined ? 0 : parseInt(skill.add_value_interest)
+    });
+  }
+
   editSkill(skill: cocSkill) {
     let skillDialogRef = this.dialog.open(SkilleditComponent, {
       data: skill
     })
+    skillDialogRef.afterClosed().subscribe(result => {
+      this.checkPoint()
+    })
   }
 
+  propDataTemp:{[key: string]: string}[] = []
+  propTempDataSource = new MatTableDataSource(this.propDataTemp);
 
+  randomProperty(): string {
+    return (30 + Math.trunc(Math.random()*60)).toString()
+  }
+
+  generateProperty(propertyName: string) {
+    this.propData[propertyName] = this.randomProperty()
+  }
+
+  generatePropertyTemp(propertyName: string, index: number) {
+    if(this.propDataTemp.length < index + 1) {
+      this.propDataTemp.push({})
+    }
+    this.propDataTemp[index][propertyName] = this.randomProperty()
+  }
+
+  generateAllProperty() {
+    for (let index = 0; index < 10; index++) {
+      for(let key in this.propData){
+        this.generatePropertyTemp(key, index)
+      }
+    }
+    console.log(this.propDataTemp)
+    this.propTempDataSource = new MatTableDataSource(this.propDataTemp)
+  }
+
+  selectPointCombination(row: any) {
+    this.propData = row
+    this.togglePropTable()
+    this.updateSkillPoint()
+  }
+
+  tableHidden = false
+  tableHiddenHint = "隐藏属性表"
+  tableHiddenDirective = "inherit"
+
+  togglePropTable() {
+    this.tableHidden = !this.tableHidden
+    this.tableHiddenHint = this.tableHidden ? "显示属性表" : "隐藏属性表"
+    this.tableHiddenDirective = this.tableHidden ? "none" : "inherit"
+  }
 }
