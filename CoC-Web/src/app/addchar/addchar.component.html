@@ -2,7 +2,7 @@
     <mat-stepper>
         <mat-step>
             <form>
-                <ng-template matStepLabel>角色基本信息</ng-template>
+                <ng-template matStepLabel>信息</ng-template>
                 <div *ngFor="let basicProp of newCharacterInfo.basicInfo" class="form-field-div">
                     <mat-form-field *ngIf="basicProp.characteristic_type == chartypeenum.string" [style.width.px]="212">
                         <mat-label>{{basicProp.characteristic_display}}</mat-label>
@@ -31,10 +31,12 @@
                 </div>
                 
             </form>
+            <div><button mat-raised-button matStepperNext color="primary" class="button-container-next" >下一步</button></div>
+            
         </mat-step>
         <mat-step>
             <form>
-                <ng-template matStepLabel>角色属性</ng-template>
+                <ng-template matStepLabel>属性</ng-template>
                 <mat-tab-group>
                     <mat-tab label="购点">
                         <div style="padding: 10px;">
@@ -73,10 +75,13 @@
                     </mat-form-field>
                 </div>
             </form>
+            <br>
+            <button mat-button matStepperPrevious color="primary" class="button-container-next">上一步</button>
+            <button mat-raised-button matStepperNext color="primary" class="button-container-next">下一步</button>
         </mat-step>
         <mat-step>
             <form>
-                <ng-template matStepLabel>角色技能</ng-template>
+                <ng-template matStepLabel>技能</ng-template>
                 <p *ngIf="currentProfession != null">您选择的职业是：{{currentProfession.Name}}<br>您的职业可选技能是：{{currentProfession.Skills}}</p>
                 <p>您现在拥有的技能点是：<strong>{{remainingSkillPoint}}/{{skillPoint}}</strong>，您现在拥有的兴趣点是<strong>{{remainingInterestPoint}}/{{interestPoint}}</strong></p>
                 <p *ngIf="remainingSkillPoint < 0" class="red-color"><strong>您的技能加点超出上限</strong></p>
@@ -98,11 +103,32 @@
                     </div>
                 </div>
             </form>
+            <br>
+            <button mat-button matStepperPrevious color="primary" class="button-container-next">上一步</button>
+            <button mat-raised-button matStepperNext color="primary" class="button-container-next">下一步</button>
         </mat-step>
         <mat-step>
             <form>
-                <ng-template matStepLabel>角色武器</ng-template>
+                <ng-template matStepLabel>武器</ng-template>
+                <p>添加您的武器</p>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>全部武器列表</mat-panel-title>
+                        <mat-panel-description>所有您可以选择的武器</mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <mat-table [dataSource]="weaponInfo">
+                        <ng-container *ngFor="let weapon of weaponName" matColumnDef="{{weapon.name}}">
+                            <mat-header-cell *matHeaderCellDef>{{weapon.display_name}}</mat-header-cell>
+                            <mat-cell *matCellDef="let element">{{element[weapon.name]}}</mat-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="weaponColumnName"></mat-header-row>
+                        <mat-row matRipple *matRowDef="let row; columns: weaponColumnName" (click)="showWeaponDetail(row)"></mat-row>
+                    </mat-table>
+                </mat-expansion-panel>
+                
             </form>
+            <br>
+            <button mat-button matStepperPrevious color="primary" class="button-container-next">上一步</button>
         </mat-step>
     </mat-stepper>
 </div>

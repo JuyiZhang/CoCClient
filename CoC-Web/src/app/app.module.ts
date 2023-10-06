@@ -39,7 +39,8 @@ import { SkilleditComponent } from './skilledit/skilledit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteModule} from '@angular/material/autocomplete';
 import { AddPersonalSkillComponent } from './add-personal-skill/add-personal-skill.component'; 
-import { MatTabsModule } from '@angular/material/tabs'; 
+import { MatTabsModule } from '@angular/material/tabs';
+import { WeaponDetailComponent } from './weapon-detail/weapon-detail.component'; 
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     GuideComponent,
     JobSelectionComponent,
     SkilleditComponent,
-    AddPersonalSkillComponent
+    AddPersonalSkillComponent,
+    WeaponDetailComponent
   ],
   imports: [
     BrowserModule,

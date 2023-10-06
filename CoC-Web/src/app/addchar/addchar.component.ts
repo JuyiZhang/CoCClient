@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { cocNewCharInfo } from 'src/data';
+import { cocNewCharInfo, weaponInfo, weaponList, weaponNameList, weaponNamingList } from 'src/data';
 import { characteristic_type_enum, cocSkill } from 'src/datastructure';
 import { MatDialog } from '@angular/material/dialog';
 import { SkilleditComponent } from '../skilledit/skilledit.component';
@@ -9,6 +9,7 @@ import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatTableDataSource } from '@angular/material/table';
+import { WeaponDetailComponent } from '../weapon-detail/weapon-detail.component';
 
 @Component({
   selector: 'app-addchar',
@@ -181,7 +182,10 @@ export class AddcharComponent {
     name: "学识：", init_value: "1", final_value: "1"
   }];
 
-  weapons = {}
+  weapons:{[key: string]: string}[] = []
+  weaponInfo = weaponInfo
+  weaponName = weaponNameList
+  weaponColumnName = weaponNamingList
   skillLimit = 0
   skillPoint = 0
   interestPoint = 0
@@ -368,5 +372,20 @@ export class AddcharComponent {
     this.tableHidden = !this.tableHidden
     this.tableHiddenHint = this.tableHidden ? "显示属性表" : "隐藏属性表"
     this.tableHiddenDirective = this.tableHidden ? "none" : "inherit"
+  }
+
+  showWeaponDetail(row: any) {
+    let weaponDialogRef = this.dialog.open(WeaponDetailComponent, {
+      data: row
+    })
+    weaponDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.weapons.push(result)
+        console.log(this.weapons)
+      }
+      
+    })
+    
+    
   }
 }

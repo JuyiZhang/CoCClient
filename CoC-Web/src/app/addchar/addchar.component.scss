@@ -49,3 +49,29 @@
     grid-auto-flow: column;
     grid-template-rows: repeat(22, 1fr);
 }
+
+.button-container-next {
+    width: 100%;
+}
+
+.mat-column-skill {
+    flex: 0 0 12%;
+    min-width: 75px;
+}
+
+.mat-column-penetrate {
+    flex: 0 0 10%
+}
+
+.mat-column-range {
+    flex: 0 0 15%
+}
+
+.mat-column-time {
+    flex: 0 0 18%
+}
+
+.mat-column-dmg {
+    flex: 0 0 22%;
+    min-width: 140px;
+}

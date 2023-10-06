@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
+html, body { height: 100%; min-width: 640px;}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 a { text-decoration: none; color: #F5F5F5; opacity: 1; transition: opacity ease-in-out 0.2s;}
 a:hover { opacity: 0.5; transition: opacity ease-in-out 0.2s;}
