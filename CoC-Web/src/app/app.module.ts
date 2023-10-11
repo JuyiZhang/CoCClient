@@ -41,6 +41,13 @@ import { MatAutocompleteSelectedEvent, MatAutocompleteModule} from '@angular/mat
 import { AddPersonalSkillComponent } from './add-personal-skill/add-personal-skill.component'; 
 import { MatTabsModule } from '@angular/material/tabs';
 import { WeaponDetailComponent } from './weapon-detail/weapon-detail.component'; 
+import { CdkDrag, DragDropModule } from '@angular/cdk/drag-drop';
+import { NewPersonalItemComponent } from './new-personal-item/new-personal-item.component';
+import { CharacterInfoPageComponent } from './character-info-page/character-info-page.component';
+import { CharacterPropertyPageComponent } from './character-property-page/character-property-page.component';
+import { CharacterSkillPageComponent } from './character-skill-page/character-skill-page.component';
+import { CharacterWeaponPageComponent } from './character-weapon-page/character-weapon-page.component';
+import { CharacterBackgroundInfoPageComponent } from './character-background-info-page/character-background-info-page.component'
 
 @NgModule({
   declarations: [
@@ -58,7 +65,13 @@ import { WeaponDetailComponent } from './weapon-detail/weapon-detail.component';
     JobSelectionComponent,
     SkilleditComponent,
     AddPersonalSkillComponent,
-    WeaponDetailComponent
+    WeaponDetailComponent,
+    NewPersonalItemComponent,
+    CharacterInfoPageComponent,
+    CharacterPropertyPageComponent,
+    CharacterSkillPageComponent,
+    CharacterWeaponPageComponent,
+    CharacterBackgroundInfoPageComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +99,9 @@ import { WeaponDetailComponent } from './weapon-detail/weapon-detail.component';
     MatChipsModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
-    MatTabsModule
+    MatTabsModule,
+    CdkDrag,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

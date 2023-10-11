@@ -1510,3 +1510,27 @@ export const weaponNamingList = ["name","skill","dmg"/*,"range","penetrate","tim
 export const weaponNameList = [{name:"name",display_name:"武器类型"},{name:"skill",display_name:"技能"},{name:"dmg",display_name:"伤害"}/*,{name:"range",display_name:"射程"},{name:"penetrate",display_name:"穿透"},{name:"time",display_name:"时代"},{name:"round",display_name:"每轮"},{name:"load",display_name:"装弹量"},{name:"success",display_name:"故障值"},{name:"price",display_name:"价格（近代/现代）"},{name:"invent_time",display_name:"发明时间"}*/]
 
 export const weaponNameListDetailed = [{name:"name",display_name:"武器类型"},{name:"skill",display_name:"技能"},{name:"dmg",display_name:"伤害"},{name:"range",display_name:"射程"},{name:"penetrate",display_name:"穿透"},{name:"time",display_name:"时代"},{name:"round",display_name:"每轮"},{name:"load",display_name:"装弹量"},{name:"success",display_name:"故障值"},{name:"price",display_name:"价格（近代/现代）"},{name:"invent_time",display_name:"发明时间"}]
+
+export const personalItemContent = [{
+    name: "item_name",
+    display_name: "物品名称",
+    type: "text"
+},{
+    name: "item_position",
+    display_name: "物品位置",
+    type: "dropdown",
+    dropdown_selection: ["颅————","头部","头发","耳朵","面部","颈部","其他(头)","躯————","肩","胸前","背后","肋","裆","腰","胯","其他(躯)","服————","衣兜","内衬","衣服内","裤兜","其他(服)","上肢————","左手","右手","双手","左臂","右臂","双臂","肘部","其他(上肢)","下肢————","左脚","右脚","双脚","左腿","右腿","双腿","膝部","其他(下肢)","其他————","其他"]
+},{
+    name: "item_content",
+    display_name: "背包格",
+    type: "text"
+},{
+    name: "item_reveal",
+    display_name: "状态",
+    type: "dropdown",
+    dropdown_selection: ["显露","隐藏"]
+},{
+    name: "remove",
+    display_name: "close",
+    type: "button",
+}]

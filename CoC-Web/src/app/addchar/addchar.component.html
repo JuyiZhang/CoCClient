@@ -3,77 +3,15 @@
         <mat-step>
             <form>
                 <ng-template matStepLabel>信息</ng-template>
-                <div *ngFor="let basicProp of newCharacterInfo.basicInfo" class="form-field-div">
-                    <mat-form-field *ngIf="basicProp.characteristic_type == chartypeenum.string" [style.width.px]="212">
-                        <mat-label>{{basicProp.characteristic_display}}</mat-label>
-                        <input matInput name="{{basicProp.characteristic_name}}" [(ngModel)]="basicInfoData[basicProp.characteristic_name]">
-                        <!--<button mat-button matSuffix type="button" (click)="submitInfo()" color="primary" *ngIf="basicProp.characteristic_name == 'name'">
-                            生成
-                        </button>-->
-                    </mat-form-field>
-                    <mat-form-field *ngIf="basicProp.characteristic_type == chartypeenum.number">
-                        <mat-label>{{basicProp.characteristic_display}}</mat-label>
-                        <input matInput name="{{basicProp.characteristic_name}}" [(ngModel)]="basicInfoData[basicProp.characteristic_name]" type="number">
-                    </mat-form-field>
-                    <mat-form-field *ngIf="basicProp.characteristic_type == chartypeenum.dropdown">
-                        <mat-label>{{basicProp.characteristic_display}}</mat-label>
-                        <mat-select name="{{basicProp.characteristic_name}}" [(ngModel)]="basicInfoData[basicProp.characteristic_name]">
-                            <mat-option *ngFor="let dropdown_item of basicProp.characteristic_dropdown" value="{{dropdown_item}}">{{dropdown_item}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field *ngIf="basicProp.characteristic_type == chartypeenum.select_window" [style.width.px]="212">
-                        <mat-label>{{basicProp.characteristic_display}}</mat-label>
-                        <input matInput readonly name="{{basicProp.characteristic_name}}" [(ngModel)]="basicInfoData[basicProp.characteristic_name]">
-                        <button mat-button matSuffix type="button" (click)="setProfession()" color="primary" *ngIf="basicProp.characteristic_type == chartypeenum.select_window">
-                            选择
-                        </button>
-                    </mat-form-field>
-                </div>
-                
+                <app-character-info-page [(basicInfoData)]="basicInfoData" (triggerSkillChange)="getSkills()" [(currentProfession)]="currentProfession"></app-character-info-page>
             </form>
-            <div><button mat-raised-button matStepperNext color="primary" class="button-container-next" >下一步</button></div>
+            <div><button mat-raised-button matStepperNext color="primary" class="button-container-next" (click)="checkInfo()">下一步</button></div>
             
         </mat-step>
         <mat-step>
             <form>
                 <ng-template matStepLabel>属性</ng-template>
-                <mat-tab-group>
-                    <mat-tab label="购点">
-                        <div style="padding: 10px;">
-                            <mat-form-field hintLabel="请询问KP">
-                                <mat-label>购点上限</mat-label>
-                                <input matInput name="max-property-point" [(ngModel)]="maxPropPoint">
-                            </mat-form-field>
-                            <mat-checkbox name="isLuckIncluded" [(ngModel)]="luckNotIncluded">不含运</mat-checkbox>
-                            <button mat-raised-button *ngIf="luckNotIncluded" color="primary" [style.margin-left.px] = "20" (click)="generateProperty('luck')">随机生成幸运属性</button>
-                            <p>您还剩余 <strong>{{remainingPropPoint}}</strong> 点属性点可供分配</p>
-                            <p *ngIf="remainingPropPoint < 0" class="red-color">注意：您的属性点超出分配上限</p>
-                        </div>
-                    </mat-tab>
-                    <mat-tab label="随机生成">
-                        <div style="padding: 10px;">
-                            <button mat-raised-button color="primary"  (click)="generateAllProperty()">随机生成所有属性</button>
-                            <button mat-button color="primary" [style.margin-left.px]="20" (click)="togglePropTable()">{{tableHiddenHint}}</button>
-                            <mat-table [dataSource]="propTempDataSource" [style.display]="tableHiddenDirective">
-                                <ng-container *ngFor="let prop of newCharacterInfo.properties" matColumnDef="{{prop.characteristic_name}}">
-                                    <mat-header-cell *matHeaderCellDef>{{prop.characteristic_display}}</mat-header-cell>
-                                    <mat-cell *matCellDef="let element">{{element[prop.characteristic_name]}}</mat-cell>
-                                </ng-container>
-                                <mat-header-row *matHeaderRowDef="propList"></mat-header-row>                            
-                                <mat-row matRipple *matRowDef="let row; columns: propList" (click)="selectPointCombination(row)"></mat-row>
-                            </mat-table>
-                        </div>
-                    </mat-tab>
-                    <mat-tab label="传统骰点" disabled></mat-tab>
-                </mat-tab-group>
-                <p *ngIf="currentProfession != null">您的技能点将基于 <strong>{{currentProfession.Profession_Point}}</strong></p>
-                <p *ngIf="currentProfession != null">依照当前数据，您有 <strong>{{skillPoint}}</strong> 点数的技能点, <strong>{{hp}}</strong> 点HP（生命值）, <strong>{{mp}}</strong> 点MP（魔法值）, <strong>{{san}}</strong> 点San（理智）值</p>
-                <div *ngFor="let prop of newCharacterInfo.properties" class="form-field-div">
-                    <mat-form-field>
-                        <mat-label>{{prop.characteristic_display}}</mat-label>
-                        <input matInput name="{{prop.characteristic_name}}" [(ngModel)]="propData[prop.characteristic_name]" (ngModelChange)="updateSkillPoint()" type="number">
-                    </mat-form-field>
-                </div>
+                <app-character-property-page [(propData)]="propData" [(skillPoint)]="skillPoint" [currentProfession]="currentProfession" (change)="updateSkillPoint()"></app-character-property-page>
             </form>
             <br>
             <button mat-button matStepperPrevious color="primary" class="button-container-next">上一步</button>
@@ -82,26 +20,17 @@
         <mat-step>
             <form>
                 <ng-template matStepLabel>技能</ng-template>
-                <p *ngIf="currentProfession != null">您选择的职业是：{{currentProfession.Name}}<br>您的职业可选技能是：{{currentProfession.Skills}}</p>
-                <p>您现在拥有的技能点是：<strong>{{remainingSkillPoint}}/{{skillPoint}}</strong>，您现在拥有的兴趣点是<strong>{{remainingInterestPoint}}/{{interestPoint}}</strong></p>
-                <p *ngIf="remainingSkillPoint < 0" class="red-color"><strong>您的技能加点超出上限</strong></p>
-                <p *ngIf="remainingInterestPoint < 0" class="red-color"><strong>您的兴趣加点超出上限</strong></p>
-                <p>您选择的职业技能有：</p>
-                <h4>请进行技能加点</h4>
-                <app-add-personal-skill [(personalSkill)]="personalSkill" [skillLimit]="skillLimit" (change)="getSkills()"></app-add-personal-skill>
-                <div class="skill-table">
-                    <div *ngFor="let skill of skills" class="coc-skill-container">
-                        <button mat-mini-fab (click)="selectProfession(skill)" class="coc-skill-main-button" disabled="{{!skill.profession_selectable == true}}">
-                            <mat-icon *ngIf="!skill.profession_selected">star_border</mat-icon>
-                            <mat-icon *ngIf="skill.profession_selected">star</mat-icon>
-                        </button>
-                        <div (click)="editSkill(skill)" style="height: fit-content;">
-                            <p class="coc-skill-text">{{skill.name}}</p>
-                            <p class="coc-skill-value" *ngIf="skill.add_value != null">{{skill.final_value}}</p>
-                            <p class="coc-skill-value" *ngIf="skill.add_value == null">{{skill.init_value}}</p>
-                        </div>
-                    </div>
-                </div>
+                <app-character-skill-page [currentProfession]="currentProfession" [(personalSkill)]="personalSkill" [(skills)]="skills" [skillPoint]="skillPoint" [interestPoint]="interestPoint" [skillLimit]="skillLimit"></app-character-skill-page>
+            </form>
+            <br>
+            <button mat-button matStepperPrevious color="primary" class="button-container-next">上一步</button>
+            <button mat-raised-button matStepperNext color="primary" class="button-container-next" (click)="checkSkill()">下一步</button>
+        </mat-step>
+        <mat-step>
+            <form>
+                <ng-template matStepLabel>武器</ng-template>
+                <app-character-weapon-page [(weapons)]="weapons"></app-character-weapon-page>
+                
             </form>
             <br>
             <button mat-button matStepperPrevious color="primary" class="button-container-next">上一步</button>
@@ -109,26 +38,48 @@
         </mat-step>
         <mat-step>
             <form>
-                <ng-template matStepLabel>武器</ng-template>
-                <p>添加您的武器</p>
-                <mat-expansion-panel>
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>全部武器列表</mat-panel-title>
-                        <mat-panel-description>所有您可以选择的武器</mat-panel-description>
-                    </mat-expansion-panel-header>
-                    <mat-table [dataSource]="weaponInfo">
-                        <ng-container *ngFor="let weapon of weaponName" matColumnDef="{{weapon.name}}">
-                            <mat-header-cell *matHeaderCellDef>{{weapon.display_name}}</mat-header-cell>
-                            <mat-cell *matCellDef="let element">{{element[weapon.name]}}</mat-cell>
-                        </ng-container>
-                        <mat-header-row *matHeaderRowDef="weaponColumnName"></mat-header-row>
-                        <mat-row matRipple *matRowDef="let row; columns: weaponColumnName" (click)="showWeaponDetail(row)"></mat-row>
-                    </mat-table>
-                </mat-expansion-panel>
-                
+                <ng-template matStepLabel>背景</ng-template>
+                <div style="display: flex; align-items: center;">
+                    <h3>随身物品</h3>
+                    <div class="spacer"></div>
+                    <button mat-raised-button (click)="addNewItem()" color="primary">
+                        <mat-icon>add</mat-icon>
+                        添加新物品  
+                    </button>
+                </div>
+                <div *ngIf="addNewPersonalItem">
+                    <div *ngFor="let personalItemItem of personalItemItemList" style="display: flex; width: 200px; float: left">
+                        <mat-form-field *ngIf="personalItemItem.type != 'button'" style="float: left;">
+                            <mat-label>{{personalItemItem.display_name}}</mat-label>
+                            <input matInput *ngIf="personalItemItem.type == 'text'" name="{{personalItemItem.name}}" [(ngModel)]="inEditPersonalItem[personalItemItem.name]" >
+                            <mat-select *ngIf="personalItemItem.type == 'dropdown'" name="{{personalItemItem.name}}" [(ngModel)]="inEditPersonalItem[personalItemItem.name]">
+                                <mat-option *ngFor="let dropdown_item of personalItemItem.dropdown_selection" value="{{dropdown_item}}">{{dropdown_item}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <button mat-button color="accented" (click)="addPersonalItem()" *ngIf="personalItemItem.type == 'button'" style="width: 100%;">
+                            <mat-icon>edit</mat-icon>
+                            添加/编辑该物品
+                        </button>
+                    </div>
+                </div>
+                <mat-table cdkDropList [dataSource]="personalItemListDataSource" (cdkDropListDropped)="onListDrop($event)" [cdkDropListData]="personalItemListDataSource" style="width: 100%;">
+                    <ng-container *ngFor="let personalItemItem of personalItemItemList" matColumnDef="{{personalItemItem.name}}">
+                        <mat-header-cell *matHeaderCellDef>{{personalItemItem.display_name}}</mat-header-cell>
+                        <mat-cell *matCellDef="let element" >
+                            <p *ngIf="personalItemItem.type != 'button'">{{element[personalItemItem.name]}}</p>
+                            <button mat-button color="warn" (click)="removePersonalItem(element)" *ngIf="personalItemItem.type == 'button'">
+                                <mat-icon>{{personalItemItem.display_name}}</mat-icon>
+                            </button>
+                            <button mat-button color="accent" (click)="editPersonalItem(element)" *ngIf="personalItemItem.type == 'button'">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="personalItemColumnName"></mat-header-row>
+                    <mat-row matRipple *matRowDef="let row; columns:personalItemColumnName" cdkDrag [cdkDragData]="row"></mat-row>
+                </mat-table>
+                <button mat-raised-button color="primary" class="button-container-next" (click)="submitCharacter()">提交</button>
             </form>
-            <br>
-            <button mat-button matStepperPrevious color="primary" class="button-container-next">上一步</button>
         </mat-step>
     </mat-stepper>
 </div>

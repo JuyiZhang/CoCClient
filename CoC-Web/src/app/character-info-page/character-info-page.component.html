@@ -1,0 +1,26 @@
+<div *ngFor="let basicProp of newCharacterInfo.basicInfo" class="form-field-div">
+    <mat-form-field *ngIf="basicProp.characteristic_type == chartypeenum.string" [style.width.px]="212">
+        <mat-label>{{basicProp.characteristic_display}}</mat-label>
+        <input matInput name="{{basicProp.characteristic_name}}" [(ngModel)]="basicInfoData[basicProp.characteristic_name]">
+        <!--<button mat-button matSuffix type="button" (click)="submitInfo()" color="primary" *ngIf="basicProp.characteristic_name == 'name'">
+            生成
+        </button>-->
+    </mat-form-field>
+    <mat-form-field *ngIf="basicProp.characteristic_type == chartypeenum.number">
+        <mat-label>{{basicProp.characteristic_display}}</mat-label>
+        <input matInput name="{{basicProp.characteristic_name}}" [(ngModel)]="basicInfoData[basicProp.characteristic_name]" type="number" (ngModelChange)="updateBasicInfo()">
+    </mat-form-field>
+    <mat-form-field *ngIf="basicProp.characteristic_type == chartypeenum.dropdown">
+        <mat-label>{{basicProp.characteristic_display}}</mat-label>
+        <mat-select name="{{basicProp.characteristic_name}}" [(ngModel)]="basicInfoData[basicProp.characteristic_name]" (ngModelChange)="updateBasicInfo()">
+            <mat-option *ngFor="let dropdown_item of basicProp.characteristic_dropdown" value="{{dropdown_item}}">{{dropdown_item}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field *ngIf="basicProp.characteristic_type == chartypeenum.select_window" [style.width.px]="212">
+        <mat-label>{{basicProp.characteristic_display}}</mat-label>
+        <input matInput readonly name="{{basicProp.characteristic_name}}" [(ngModel)]="basicInfoData[basicProp.characteristic_name]">
+        <button mat-button matSuffix type="button" (click)="setProfession()" color="primary" *ngIf="basicProp.characteristic_type == chartypeenum.select_window">
+            选择
+        </button>
+    </mat-form-field>
+</div>

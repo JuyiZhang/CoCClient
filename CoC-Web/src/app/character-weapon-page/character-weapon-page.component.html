@@ -1,0 +1,30 @@
+<p>添加您的武器</p>
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>持有武器列表</mat-panel-title>
+        <mat-panel-description>所有您持有的武器</mat-panel-description>
+    </mat-expansion-panel-header>
+    <p *ngIf="weapons.length == 0">您未持有任何武器</p>
+    <mat-table [dataSource]="weaponsDataSource" *ngIf="weapons.length != 0">
+        <ng-container *ngFor="let weapon of weaponName" matColumnDef="{{weapon.name}}">
+            <mat-header-cell *matHeaderCellDef>{{weapon.display_name}}</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element[weapon.name]}}</mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="weaponColumnName"></mat-header-row>
+        <mat-row matRipple *matRowDef="let row; columns: weaponColumnName" (click)="showWeaponDetail(row)"></mat-row>
+    </mat-table>
+</mat-expansion-panel>
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>全部武器列表</mat-panel-title>
+        <mat-panel-description>所有您可以选择的武器</mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-table [dataSource]="weaponInfo">
+        <ng-container *ngFor="let weapon of weaponName" matColumnDef="{{weapon.name}}">
+            <mat-header-cell *matHeaderCellDef>{{weapon.display_name}}</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element[weapon.name]}}</mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="weaponColumnName"></mat-header-row>
+        <mat-row matRipple *matRowDef="let row; columns: weaponColumnName" (click)="showWeaponDetail(row)"></mat-row>
+    </mat-table>
+</mat-expansion-panel>

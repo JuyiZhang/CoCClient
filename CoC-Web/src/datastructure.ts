@@ -48,6 +48,9 @@ export interface cocSkill {
     add_value_interest?: string;
     profession_selectable?: boolean;
     profession_selected?: boolean;
+    annotation_allowed?: boolean;
+    annotation?: string;
+    annotation_dropdown?: string[];
 }
 
 export enum characteristic_type_enum {

@@ -1,0 +1,37 @@
+<mat-tab-group>
+    <mat-tab label="购点">
+        <div style="padding: 10px;">
+            <mat-form-field hintLabel="请询问KP">
+                <mat-label>购点上限</mat-label>
+                <input matInput name="max-property-point" [(ngModel)]="maxPropPoint">
+            </mat-form-field>
+            <mat-checkbox name="isLuckIncluded" [(ngModel)]="luckNotIncluded">不含运</mat-checkbox>
+            <button mat-raised-button *ngIf="luckNotIncluded" color="primary" [style.margin-left.px] = "20" (click)="generateProperty('luck')">随机生成幸运属性</button>
+            <p>您还剩余 <strong>{{remainingPropPoint}}</strong> 点属性点可供分配</p>
+            <p *ngIf="remainingPropPoint < 0" class="red-color">注意：您的属性点超出分配上限</p>
+        </div>
+    </mat-tab>
+    <mat-tab label="随机生成">
+        <div style="padding: 10px;">
+            <button mat-raised-button color="primary"  (click)="generateAllProperty()">随机生成所有属性</button>
+            <button mat-button color="primary" [style.margin-left.px]="20" (click)="togglePropTable()">{{tableHiddenHint}}</button>
+            <mat-table [dataSource]="propTempDataSource" [style.display]="tableHiddenDirective">
+                <ng-container *ngFor="let prop of newCharacterInfo.properties" matColumnDef="{{prop.characteristic_name}}">
+                    <mat-header-cell *matHeaderCellDef>{{prop.characteristic_display}}</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element[prop.characteristic_name]}}</mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="propList"></mat-header-row>                            
+                <mat-row matRipple *matRowDef="let row; columns: propList" (click)="selectPointCombination(row)"></mat-row>
+            </mat-table>
+        </div>
+    </mat-tab>
+    <mat-tab label="传统骰点" disabled></mat-tab>
+</mat-tab-group>
+<p *ngIf="currentProfession != null">您的技能点将基于 <strong>{{currentProfession.Profession_Point}}</strong></p>
+<p *ngIf="currentProfession != null">依照当前数据，您有 <strong>{{skillPoint}}</strong> 点数的技能点, <strong>{{hp}}</strong> 点HP（生命值）, <strong>{{mp}}</strong> 点MP（魔法值）, <strong>{{san}}</strong> 点San（理智）值</p>
+<div *ngFor="let prop of newCharacterInfo.properties" class="form-field-div">
+    <mat-form-field>
+        <mat-label>{{prop.characteristic_display}}</mat-label>
+        <input matInput name="{{prop.characteristic_name}}" [(ngModel)]="propData[prop.characteristic_name]" (ngModelChange)="updateSkillPoint()" type="number">
+    </mat-form-field>
+</div>
